@@ -1,0 +1,29 @@
+# .NET build output
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+server.log
+
+# Local config
+local.props
