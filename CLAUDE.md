@@ -271,3 +271,4 @@ dotnet build -p:DeadlockDir="/mnt/f/SteamLibrary/steamapps/common/Deadlock" \
 - `examples/DevMode/` — minimal working plugin (enables cheats, grants resources)
 - `docs/architecture.md` — how deadworks bridges native C++ and managed C#
 - `docs/api-reference.md` — compact API cheat sheet
+- `docs/plugin-architecture.md` — recommended folder structure and patterns for real plugins (DI, repositories, state machines, HUD lifecycle, native DLL deployment)

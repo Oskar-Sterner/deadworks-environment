@@ -33,7 +33,8 @@ deadworks-environment/
 │       └── DevMode.csproj
 └── docs/
     ├── architecture.md       <-- How deadworks works under the hood
-    └── api-reference.md      <-- Quick API cheat sheet
+    ├── api-reference.md      <-- Quick API cheat sheet
+    └── plugin-architecture.md <-- Recommended plugin structure for real projects
 ```
 
 ## Prerequisites
@@ -274,13 +275,25 @@ public class MyPlugin : DeadworksPluginBase
 
 ## Plugin Architecture Best Practices
 
+For simple plugins, a single `.cs` file is fine (see `examples/DevMode/`). For anything more complex, see **[docs/plugin-architecture.md](docs/plugin-architecture.md)** for the recommended folder structure and patterns, including:
+
+- Main class as orchestrator (lifecycle + delegation)
+- Constructor-based dependency injection
+- Repository pattern for database access
+- Immutable data models with C# records
+- State machines for game logic
+- Slot-based player state tracking
+- Timer-based ticking (100ms) instead of OnGameFrame
+- NuGet + native DLL deployment rules
+- Resilient HUD entity lifecycle
+
+Quick rules:
 1. **One responsibility per plugin** — don't build monoliths
-2. **Use Timers instead of OnGameFrame** for periodic work — `Timer.Every()`, `Timer.Once()`, `Timer.NextTick()`
-3. **Clean up in OnUnload** — cancel dynamic listeners, dispose resources
-4. **Use HookResult correctly** — `Continue` (pass through), `Changed` (modified args), `Handled` (consumed), `Stop` (block entirely)
-5. **Keep plugins independent** — don't depend on other plugins being loaded
-6. **Use `[GameEventHandler]`** for declarative event handling, `GameEvents.AddListener` for dynamic
-7. **Use `[ChatCommand]`** for player-facing commands
+2. **Use Timers instead of OnGameFrame** for periodic work
+3. **Clean up in OnUnload** — cancel listeners, dispose resources
+4. **Use HookResult correctly** — `Continue`, `Changed`, `Handled`, `Stop`
+5. **Keep plugins independent** — don't depend on other plugins
+6. **Native DLLs go in `bin/win64/`**, NOT `managed/plugins/`
 
 ## Further Reading
 
